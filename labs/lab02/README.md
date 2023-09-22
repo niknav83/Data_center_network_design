@@ -326,8 +326,37 @@ router ospf Underlay
 ```
 feature ospf
 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.22/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
 
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.22/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
 
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.20.1/24
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.12/32
+  ip router ospf Underlay area 0.0.0.0
+
+router ospf Underlay
+  router-id 192.168.0.12
+  passive-interface default
 !
 ```
 
@@ -336,9 +365,78 @@ feature ospf
 ```
 feature ospf
 
+interface Vlan130
+  no shutdown
+  ip address 192.168.30.1/24
+  ip router ospf Underlay area 0.0.0.0
 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.34/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
 
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.34/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  switchport
+  switchport access vlan 130
+  mtu 9216
+  no shutdown
+
+interface Ethernet1/4
+  switchport
+  switchport access vlan 130
+  mtu 9216
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.13/32
+  ip router ospf Underlay area 0.0.0.0
+
+router ospf Underlay
+  router-id 192.168.0.13
+  passive-interface default
 !
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
