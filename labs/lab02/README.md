@@ -50,9 +50,11 @@
 | VPC4    | eth0      | 192.168.30.3 | 255.255.255.0   | 192.168.30.1    |
 
 
-[Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab02/configs)
+
+## [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab02/configs)
 
 В данной работе применялса образ nxosv9k-9500-9.3.7
+
 
 ## Приступаем к настрйке сети:
 
