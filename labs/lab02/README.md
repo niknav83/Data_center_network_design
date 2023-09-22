@@ -99,6 +99,7 @@ interface Ethernet1/3
   medium p2p
   ip address 192.168.2.33/30
   no shutdown
+
 interface loopback0
   ip address 192.168.0.2/32
 !
@@ -123,6 +124,7 @@ interface Ethernet1/3
   mtu 9216
   ip address 192.168.10.1/24
   no shutdown
+
 interface loopback0
   ip address 192.168.0.11/32
 !
@@ -147,6 +149,7 @@ interface Ethernet1/3
   mtu 9216
   ip address 192.168.20.1/24
   no shutdown
+
 interface loopback0
   ip address 192.168.0.12/32
 !
@@ -182,7 +185,160 @@ interface Ethernet1/4
   switchport access vlan 130
   mtu 9216
   no shutdown
+
 interface loopback0
   ip address 192.168.0.13/32
 !
 ```
+
+### Далее для общей связанности между всеми устройствами настроим протокол OSPF.
+
+На Nexus необходимо для начала включить функцию OSPF
+
+```
+feature ospf
+```
+
+ Конфигурация OSPF для Spine-1:
+
+```
+feature ospf
+
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.1/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.21/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.33/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.1/32
+  ip router ospf Underlay area 0.0.0.0
+
+router ospf Underlay
+  router-id 192.168.0.1
+  passive-interface default
+!
+```
+ Конфигурация OSPF для Spine-2:
+
+```
+feature ospf
+
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.1/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.21/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.33/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.2/32
+  ip router ospf Underlay area 0.0.0.0
+
+router ospf Underlay
+  router-id 192.168.0.2
+  passive-interface default
+!
+```
+
+ Конфигурация OSPF для Leaf-1:
+
+```
+feature ospf
+
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.2/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.2/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.10.1/24
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.11/32
+  ip router ospf Underlay area 0.0.0.0
+
+router ospf Underlay
+  router-id 192.168.0.11
+  passive-interface default
+!
+```
+
+ Конфигурация OSPF для Leaf-2:
+
+```
+feature ospf
+
+
+
+!
+```
+
+ Конфигурация OSPF для Leaf-3:
+
+```
+feature ospf
+
+
+
+!
+```
+
+
