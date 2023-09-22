@@ -74,6 +74,9 @@ interface Ethernet1/3
   medium p2p
   ip address 192.168.1.33/30
   no shutdown
+
+interface loopback0
+  ip address 192.168.0.1/32
 !
 ```
  Конфигурация интерфейсов для Spine-2:
@@ -96,17 +99,90 @@ interface Ethernet1/3
   medium p2p
   ip address 192.168.2.33/30
   no shutdown
+interface loopback0
+  ip address 192.168.0.2/32
 !
 ```
 
+ Конфигурация интерфейсов для Leaf-1:
 
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.2/30
+  no shutdown
 
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.2/30
+  no shutdown
 
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.10.1/24
+  no shutdown
+interface loopback0
+  ip address 192.168.0.11/32
+!
+```
 
+ Конфигурация интерфейсов для Leaf-2:
 
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.22/30
+  no shutdown
 
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.22/30
+  no shutdown
 
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.20.1/24
+  no shutdown
+interface loopback0
+  ip address 192.168.0.12/32
+!
+```
 
+ Конфигурация интерфейсов для Leaf-3:
 
+```
+interface Vlan130
+  no shutdown
+  ip address 192.168.30.1/24
 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.34/30
+  no shutdown
 
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.34/30
+  no shutdown
+
+interface Ethernet1/3
+  switchport
+  switchport access vlan 130
+  mtu 9216
+  no shutdown
+
+interface Ethernet1/4
+  switchport
+  switchport access vlan 130
+  mtu 9216
+  no shutdown
+interface loopback0
+  ip address 192.168.0.13/32
+!
+```
