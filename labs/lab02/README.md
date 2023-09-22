@@ -48,3 +48,64 @@
 | VPC2    | eth0      | 192.168.20.2 | 255.255.255.0   |                 |
 | VPC3    | eth0      | 192.168.30.2 | 255.255.255.0   |                 |
 | VPC4    | eth0      | 192.168.30.3 | 255.255.255.0   |                 |
+
+### Приступаем к настрйке сети:
+
+## Настроим интерфейсы и IP адреса на всех устройствах Underlay-сети.
+
+#Конфигурация интерфейсов для Spine-1:
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.1/30
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.21/30
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.33/30
+  no shutdown
+!
+```
+#Конфигурация интерфейсов для Spine-2:
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.1/30
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.21/30
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.33/30
+  no shutdown
+!
+```
+
+
+
+
+
+
+
+
+
+
+
+
