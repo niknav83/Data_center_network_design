@@ -625,30 +625,180 @@ Link ID         ADV Router      Age        Seq#       Checksum Link Count
 Вывод команды show ip route ospf для Spine-1:
 
 ```
+Spine-1# show ip route ospf
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+192.168.0.2/32, ubest/mbest: 3/0
+    *via 192.168.1.2, Eth1/1, [110/81], 00:04:56, ospf-Underlay, intra
+    *via 192.168.1.22, Eth1/2, [110/81], 01:26:43, ospf-Underlay, intra
+    *via 192.168.1.34, Eth1/3, [110/81], 01:14:03, ospf-Underlay, intra
+192.168.0.11/32, ubest/mbest: 1/0
+    *via 192.168.1.2, Eth1/1, [110/41], 00:04:56, ospf-Underlay, intra
+192.168.0.12/32, ubest/mbest: 1/0
+    *via 192.168.1.22, Eth1/2, [110/41], 01:26:43, ospf-Underlay, intra
+192.168.0.13/32, ubest/mbest: 1/0
+    *via 192.168.1.34, Eth1/3, [110/41], 01:14:03, ospf-Underlay, intra
+192.168.2.0/30, ubest/mbest: 1/0
+    *via 192.168.1.2, Eth1/1, [110/80], 00:04:56, ospf-Underlay, intra
+192.168.2.20/30, ubest/mbest: 1/0
+    *via 192.168.1.22, Eth1/2, [110/80], 01:26:43, ospf-Underlay, intra
+192.168.2.32/30, ubest/mbest: 1/0
+    *via 192.168.1.34, Eth1/3, [110/80], 01:14:03, ospf-Underlay, intra
+192.168.10.0/24, ubest/mbest: 1/0
+    *via 192.168.1.2, Eth1/1, [110/80], 00:04:56, ospf-Underlay, intra
+192.168.20.0/24, ubest/mbest: 1/0
+    *via 192.168.1.22, Eth1/2, [110/80], 01:26:43, ospf-Underlay, intra
+192.168.30.0/24, ubest/mbest: 1/0
+    *via 192.168.1.34, Eth1/3, [110/80], 01:13:24, ospf-Underlay, intra
 
 ```
 
  Вывод команды show ip route ospf для Spine-2:
 
 ```
+Spine-2# show ip route ospf
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
 
+192.168.0.1/32, ubest/mbest: 3/0
+    *via 192.168.2.2, Eth1/1, [110/81], 00:05:50, ospf-Underlay, intra
+    *via 192.168.2.22, Eth1/2, [110/81], 01:27:37, ospf-Underlay, intra
+    *via 192.168.2.34, Eth1/3, [110/81], 01:14:57, ospf-Underlay, intra
+192.168.0.11/32, ubest/mbest: 1/0
+    *via 192.168.2.2, Eth1/1, [110/41], 00:05:50, ospf-Underlay, intra
+192.168.0.12/32, ubest/mbest: 1/0
+    *via 192.168.2.22, Eth1/2, [110/41], 01:27:37, ospf-Underlay, intra
+192.168.0.13/32, ubest/mbest: 1/0
+    *via 192.168.2.34, Eth1/3, [110/41], 01:15:02, ospf-Underlay, intra
+192.168.1.0/30, ubest/mbest: 1/0
+    *via 192.168.2.2, Eth1/1, [110/80], 00:05:50, ospf-Underlay, intra
+192.168.1.20/30, ubest/mbest: 1/0
+    *via 192.168.2.22, Eth1/2, [110/80], 01:27:37, ospf-Underlay, intra
+192.168.1.32/30, ubest/mbest: 1/0
+    *via 192.168.2.34, Eth1/3, [110/80], 01:15:02, ospf-Underlay, intra
+192.168.10.0/24, ubest/mbest: 1/0
+    *via 192.168.2.2, Eth1/1, [110/80], 00:05:50, ospf-Underlay, intra
+192.168.20.0/24, ubest/mbest: 1/0
+    *via 192.168.2.22, Eth1/2, [110/80], 01:27:37, ospf-Underlay, intra
+192.168.30.0/24, ubest/mbest: 1/0
+    *via 192.168.2.34, Eth1/3, [110/80], 01:14:18, ospf-Underlay, intra
 ```
 
  Вывод команды show ip route ospf для Leaf-1:
 
 ```
+Leaf-1# show ip route ospf
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+192.168.0.1/32, ubest/mbest: 1/0
+    *via 192.168.1.1, Eth1/1, [110/41], 00:01:02, ospf-Underlay, intra
+192.168.0.2/32, ubest/mbest: 1/0
+    *via 192.168.2.1, Eth1/2, [110/41], 00:01:07, ospf-Underlay, intra
+192.168.0.12/32, ubest/mbest: 2/0
+    *via 192.168.1.1, Eth1/1, [110/81], 00:01:02, ospf-Underlay, intra
+    *via 192.168.2.1, Eth1/2, [110/81], 00:01:07, ospf-Underlay, intra
+192.168.0.13/32, ubest/mbest: 2/0
+    *via 192.168.1.1, Eth1/1, [110/81], 00:01:02, ospf-Underlay, intra
+    *via 192.168.2.1, Eth1/2, [110/81], 00:01:07, ospf-Underlay, intra
+192.168.1.20/30, ubest/mbest: 1/0
+    *via 192.168.1.1, Eth1/1, [110/80], 00:01:02, ospf-Underlay, intra
+192.168.1.32/30, ubest/mbest: 1/0
+    *via 192.168.1.1, Eth1/1, [110/80], 00:01:02, ospf-Underlay, intra
+192.168.2.20/30, ubest/mbest: 1/0
+    *via 192.168.2.1, Eth1/2, [110/80], 00:01:07, ospf-Underlay, intra
+192.168.2.32/30, ubest/mbest: 1/0
+    *via 192.168.2.1, Eth1/2, [110/80], 00:01:07, ospf-Underlay, intra
+192.168.20.0/24, ubest/mbest: 2/0
+    *via 192.168.1.1, Eth1/1, [110/120], 00:01:02, ospf-Underlay, intra
+    *via 192.168.2.1, Eth1/2, [110/120], 00:01:07, ospf-Underlay, intra
+192.168.30.0/24, ubest/mbest: 2/0
+    *via 192.168.1.1, Eth1/1, [110/120], 00:01:02, ospf-Underlay, intra
+    *via 192.168.2.1, Eth1/2, [110/120], 00:01:07, ospf-Underlay, intra
 
 ```
 
  Вывод команды show ip route ospf для Leaf-2:
 
 ```
+Leaf-2# show ip route ospf
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+192.168.0.1/32, ubest/mbest: 1/0
+    *via 192.168.1.21, Eth1/1, [110/41], 01:24:30, ospf-Underlay, intra
+192.168.0.2/32, ubest/mbest: 1/0
+    *via 192.168.2.21, Eth1/2, [110/41], 01:24:25, ospf-Underlay, intra
+192.168.0.11/32, ubest/mbest: 2/0
+    *via 192.168.1.21, Eth1/1, [110/81], 00:02:39, ospf-Underlay, intra
+    *via 192.168.2.21, Eth1/2, [110/81], 00:02:39, ospf-Underlay, intra
+192.168.0.13/32, ubest/mbest: 2/0
+    *via 192.168.1.21, Eth1/1, [110/81], 01:11:46, ospf-Underlay, intra
+    *via 192.168.2.21, Eth1/2, [110/81], 01:11:51, ospf-Underlay, intra
+192.168.1.0/30, ubest/mbest: 1/0
+    *via 192.168.1.21, Eth1/1, [110/80], 01:24:30, ospf-Underlay, intra
+192.168.1.32/30, ubest/mbest: 1/0
+    *via 192.168.1.21, Eth1/1, [110/80], 01:24:30, ospf-Underlay, intra
+192.168.2.0/30, ubest/mbest: 1/0
+    *via 192.168.2.21, Eth1/2, [110/80], 01:24:25, ospf-Underlay, intra
+192.168.2.32/30, ubest/mbest: 1/0
+    *via 192.168.2.21, Eth1/2, [110/80], 01:24:25, ospf-Underlay, intra
+192.168.10.0/24, ubest/mbest: 2/0
+    *via 192.168.1.21, Eth1/1, [110/120], 00:02:39, ospf-Underlay, intra
+    *via 192.168.2.21, Eth1/2, [110/120], 00:02:39, ospf-Underlay, intra
+192.168.30.0/24, ubest/mbest: 2/0
+    *via 192.168.1.21, Eth1/1, [110/120], 01:11:07, ospf-Underlay, intra
+    *via 192.168.2.21, Eth1/2, [110/120], 01:11:07, ospf-Underlay, intra
 
 ```
  
  Вывод команды show ip route ospf для Leaf-3:
 
 ```
+Leaf-3# show ip route ospf
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+192.168.0.1/32, ubest/mbest: 1/0
+    *via 192.168.1.33, Eth1/1, [110/41], 01:12:53, ospf-Underlay, intra
+192.168.0.2/32, ubest/mbest: 1/0
+    *via 192.168.2.33, Eth1/2, [110/41], 01:12:58, ospf-Underlay, intra
+192.168.0.11/32, ubest/mbest: 2/0
+    *via 192.168.1.33, Eth1/1, [110/81], 00:03:46, ospf-Underlay, intra
+    *via 192.168.2.33, Eth1/2, [110/81], 00:03:46, ospf-Underlay, intra
+192.168.0.12/32, ubest/mbest: 2/0
+    *via 192.168.1.33, Eth1/1, [110/81], 01:12:53, ospf-Underlay, intra
+    *via 192.168.2.33, Eth1/2, [110/81], 01:12:58, ospf-Underlay, intra
+192.168.1.0/30, ubest/mbest: 1/0
+    *via 192.168.1.33, Eth1/1, [110/80], 01:12:53, ospf-Underlay, intra
+192.168.1.20/30, ubest/mbest: 1/0
+    *via 192.168.1.33, Eth1/1, [110/80], 01:12:53, ospf-Underlay, intra
+192.168.2.0/30, ubest/mbest: 1/0
+    *via 192.168.2.33, Eth1/2, [110/80], 01:12:58, ospf-Underlay, intra
+192.168.2.20/30, ubest/mbest: 1/0
+    *via 192.168.2.33, Eth1/2, [110/80], 01:12:58, ospf-Underlay, intra
+192.168.10.0/24, ubest/mbest: 2/0
+    *via 192.168.1.33, Eth1/1, [110/120], 00:03:46, ospf-Underlay, intra
+    *via 192.168.2.33, Eth1/2, [110/120], 00:03:46, ospf-Underlay, intra
+192.168.20.0/24, ubest/mbest: 2/0
+    *via 192.168.1.33, Eth1/1, [110/120], 01:12:53, ospf-Underlay, intra
+    *via 192.168.2.33, Eth1/2, [110/120], 01:12:58, ospf-Underlay, intra
 
 ```
 
