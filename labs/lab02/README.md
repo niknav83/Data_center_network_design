@@ -50,6 +50,9 @@
 | VPC4    | eth0      | 192.168.30.3 | 255.255.255.0   | 192.168.30.1    |
 
 
+[Примеры конфигов](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab02/configs)
+
+
 ## Приступаем к настрйке сети:
 
 ### Настроим интерфейсы и IP адреса на всех устройствах Underlay-сети.
