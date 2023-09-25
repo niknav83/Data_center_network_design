@@ -192,13 +192,13 @@ interface loopback0
 На Nexus необходимо для начала включить функцию IS-IS
 
 ```
-feature ospf
+feature isis
 ```
 
  Конфигурация IS-IS для Spine-1:
 
 ```
-feature ospf
+feature isis
 
 interface Ethernet1/1
   mtu 9216
@@ -234,7 +234,7 @@ router isis Underlay
  Конфигурация IS-IS для Spine-2:
 
 ```
-feature ospf
+feature isis
 
 interface Ethernet1/1
   mtu 9216
@@ -271,7 +271,7 @@ router isis Underlay
  Конфигурация IS-IS для Leaf-1:
 
 ```
-feature ospf
+feature isis
 
 interface Ethernet1/1
   mtu 9216
@@ -308,7 +308,7 @@ router isis Underlay
  Конфигурация IS-IS для Leaf-2:
 
 ```
-feature ospf
+feature isis
 
 interface Ethernet1/1
   mtu 9216
@@ -345,7 +345,7 @@ router isis Underlay
  Конфигурация IS-IS для Leaf-3:
 
 ```
-feature ospf
+feature isis
 
 interface Vlan130
   no shutdown
