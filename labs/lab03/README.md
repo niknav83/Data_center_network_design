@@ -18,7 +18,7 @@
 
 
 ## Схема стенда 
-![img_3.png](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab01/img_3.png)
+![img_1.png](img_1.png)
 
 ## Таблица адресов
 | Device  | Interface | IP Address   | Subnet Mask     | Default Gateway |
