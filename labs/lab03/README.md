@@ -195,7 +195,7 @@ interface loopback0
 feature ospf
 ```
 
- Конфигурация OSPF для Spine-1:
+ Конфигурация IS-IS для Spine-1:
 
 ```
 feature ospf
@@ -231,7 +231,7 @@ router isis Underlay
   is-type level-1
 !
 ```
- Конфигурация OSPF для Spine-2:
+ Конфигурация IS-IS для Spine-2:
 
 ```
 feature ospf
@@ -268,7 +268,7 @@ router isis Underlay
 !
 ```
 
- Конфигурация OSPF для Leaf-1:
+ Конфигурация IS-IS для Leaf-1:
 
 ```
 feature ospf
@@ -305,7 +305,7 @@ router isis Underlay
 !
 ```
 
- Конфигурация OSPF для Leaf-2:
+ Конфигурация IS-IS для Leaf-2:
 
 ```
 feature ospf
@@ -342,7 +342,7 @@ router isis Underlay
 !
 ```
 
- Конфигурация OSPF для Leaf-3:
+ Конфигурация IS-IS для Leaf-3:
 
 ```
 feature ospf
