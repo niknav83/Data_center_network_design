@@ -54,7 +54,7 @@
 ### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab02/configs)
 
 В данной работе применялса образ nxosv9k-9500-9.3.7
-
+Логин и пароль: admin 
 
 ## Приступаем к настрйке сети:
 
