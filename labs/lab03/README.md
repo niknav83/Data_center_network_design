@@ -952,12 +952,16 @@ trace to 192.168.10.2, 8 hops max, press Ctrl+C to stop
  3   192.168.1.1   70.015 ms  13.899 ms  13.536 ms
  4   *192.168.10.2   37.058 ms (ICMP type:3, code:3, Destination port unreachable)
 ```
+
+```
 VPCS> tracer 192.168.20.2
 trace to 192.168.20.2, 8 hops max, press Ctrl+C to stop
  1   192.168.40.1   5.361 ms  4.179 ms  3.557 ms
  2   192.168.2.30   53.656 ms  9.142 ms  8.908 ms
  3   192.168.2.21   29.023 ms  15.581 ms  14.953 ms
  4   *192.168.20.2   32.921 ms (ICMP type:3, code:3, Destination port unreachable)
+```
+
 ```
 VPCS> tracer 192.168.30.2
 trace to 192.168.30.2, 8 hops max, press Ctrl+C to stop
