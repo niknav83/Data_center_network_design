@@ -67,18 +67,18 @@
 
 ```
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.1/30
+  medium p2p
+  ip address 192.168.1.0/31
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.1.21/30
+  medium p2p
+  ip address 192.168.1.20/31
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
-  ip address 192.168.1.33/30
+  medium p2p
+  ip address 192.168.1.30/31
   no shutdown
 
 interface loopback0
@@ -89,18 +89,18 @@ interface loopback0
 
 ```
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.2.1/30
+  medium p2p
+  ip address 192.168.2.0/31
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.21/30
+  medium p2p
+  ip address 192.168.2.20/31
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
-  ip address 192.168.2.33/30
+  medium p2p
+  ip address 192.168.2.30/31
   no shutdown
 
 interface loopback0
@@ -112,17 +112,16 @@ interface loopback0
 
 ```
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.2/30
+  medium p2p
+  ip address 192.168.1.1/31
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.2/30
+  medium p2p
+  ip address 192.168.2.1/31
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
   ip address 192.168.10.1/24
   no shutdown
 
@@ -135,17 +134,16 @@ interface loopback0
 
 ```
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.22/30
+  medium p2p
+  ip address 192.168.1.21/31
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.22/30
+  medium p2p
+  ip address 192.168.2.21/31
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
   ip address 192.168.20.1/24
   no shutdown
 
@@ -157,36 +155,53 @@ interface loopback0
  Конфигурация интерфейсов для Leaf-3:
 
 ```
-interface Vlan130
-  no shutdown
-  ip address 192.168.30.1/24
-
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.34/30
+  medium p2p
+  ip address 192.168.1.31/31
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.34/30
+  medium p2p
+  ip address 192.168.2.31/31
   no shutdown
 
 interface Ethernet1/3
-  switchport
-  switchport access vlan 130
-  mtu 9216
+  ip address 192.168.30.1/24
   no shutdown
 
 interface Ethernet1/4
-  switchport
-  switchport access vlan 130
-  mtu 9216
+  ip address 192.168.40.1/24
   no shutdown
 
 interface loopback0
   ip address 192.168.0.13/32
 !
 ```
+
+Конфигурация интерфейсов для VPC1:
+
+```
+ip 192.168.10.2 192.168.10.1 24
+```
+
+Конфигурация интерфейсов для VPC2:
+
+```
+ip 192.168.20.2 192.168.20.1 24
+```
+
+Конфигурация интерфейсов для VPC3:
+
+```
+ip 192.168.30.2 192.168.30.1 24
+```
+
+Конфигурация интерфейсов для VPC4:
+
+```
+ip 192.168.40.2 192.168.40.1 24
+```
+
 
 ### Далее для общей связанности между всеми устройствами настроим протокол IS-IS.
 
@@ -202,30 +217,30 @@ feature isis
 feature isis
 
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.1/30
+  medium p2p
+  ip address 192.168.1.0/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.1.21/30
+  medium p2p
+  ip address 192.168.1.20/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
-  ip address 192.168.1.33/30
+  medium p2p
+  ip address 192.168.1.30/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface loopback0
   ip address 192.168.0.1/32
-  isis network point-to-point
   ip router isis Underlay
+  isis passive-interface level-1-2
 
 router isis Underlay
   net 49.0001.1921.6800.0001.00
@@ -238,30 +253,30 @@ router isis Underlay
 feature isis
 
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.2.1/30
+  medium p2p
+  ip address 192.168.2.0/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.21/30
+  medium p2p
+  ip address 192.168.2.20/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
-  ip address 192.168.2.33/30
+  medium p2p
+  ip address 192.168.2.30/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface loopback0
   ip address 192.168.0.2/32
-  isis network point-to-point
   ip router isis Underlay
+  isis passive-interface level-1-2
 
 router isis Underlay
   net 49.0001.1921.6800.0002.00
@@ -275,21 +290,20 @@ router isis Underlay
 feature isis
 
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.2/30
+  medium p2p
+  ip address 192.168.1.1/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.2/30
+  medium p2p
+  ip address 192.168.2.1/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
   ip address 192.168.10.1/24
   ip router isis Underlay
   isis passive-interface level-1-2
@@ -312,21 +326,20 @@ router isis Underlay
 feature isis
 
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.22/30
+  medium p2p
+  ip address 192.168.1.21/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.22/30
+  medium p2p
+  ip address 192.168.2.21/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/3
-  mtu 9216
   ip address 192.168.20.1/24
   ip router isis Underlay
   isis passive-interface level-1-2
@@ -348,37 +361,30 @@ router isis Underlay
 ```
 feature isis
 
-interface Vlan130
-  no shutdown
-  mtu 9216
-  ip address 192.168.30.1/24
-  ip router isis Underlay
-  isis passive-interface level-1-2
-
 interface Ethernet1/1
-  mtu 9216
-  ip address 192.168.1.34/30
+  medium p2p
+  ip address 192.168.1.31/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
-  ip address 192.168.2.34/30
+  medium p2p
+  ip address 192.168.2.31/31
   isis network point-to-point
   ip router isis Underlay
   no shutdown
 
 interface Ethernet1/3
-  switchport
-  switchport access vlan 130
-  mtu 9216
+  ip address 192.168.30.1/24
+  ip router isis Underlay
+  isis passive-interface level-1-2
   no shutdown
 
 interface Ethernet1/4
-  switchport
-  switchport access vlan 130
-  mtu 9216
+  ip address 192.168.40.1/24
+  ip router isis Underlay
+  isis passive-interface level-1-2
   no shutdown
 
 interface loopback0
@@ -394,32 +400,46 @@ router isis Underlay
 
 ## Проверяем работу протокола IS-IS:
 
- Вывод команды  для Spine-1:
+ Вывод команды show isis hostname для Spine-1:
+
+```
+Spine-1# show isis hostname
+IS-IS Process: Underlay dynamic hostname table VRF: default
+  Level  System ID       Dynamic hostname
+  1      1921.6800.0001* Spine-1
+  1      1921.6800.0002  Spine-2
+  1      1921.6800.0011  Liaf-1
+  1      1921.6800.0012  Leaf-2
+  1      1921.6800.0013  Leaf-3
+```
+
+ Вывод команды show isis hostname для Spine-2:
+
+```
+Spine-2# show isis hostname
+IS-IS Process: Underlay dynamic hostname table VRF: default
+  Level  System ID       Dynamic hostname
+  1      1921.6800.0001  Spine-1
+  1      1921.6800.0002* Spine-2
+  1      1921.6800.0011  Liaf-1
+  1      1921.6800.0012  Leaf-2
+  1      1921.6800.0013  Leaf-3
+```
+
+ Вывод команды show isis hostname для Leaf-1:
 
 ```
 
-```
-
- Вывод команды  для Spine-2:
 
 ```
 
-```
-
- Вывод команды  для Leaf-1:
-
-```
-
-
-```
-
- Вывод команды  для Leaf-2:
+ Вывод команды show isis hostname для Leaf-2:
 
 ```
 
 ```
  
- Вывод команды  для Leaf-3:
+ Вывод команды show isis hostname для Leaf-3:
 
 ```
 
