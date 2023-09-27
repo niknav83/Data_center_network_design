@@ -19,6 +19,8 @@
 
 ### Общая информация
 
+<details>
+
 <summary> Описание протокола </summary>
 
 ### IS-IS (Intermediate System to Intermediate System)
