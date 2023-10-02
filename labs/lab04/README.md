@@ -50,7 +50,7 @@
 | VPC4    | eth0      | 192.168.40.2 | 255.255.255.0   | 192.168.40.1    |
 
 
-### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab03/configs)
+### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab04/configs)
 
 В данной работе применялса образ nxosv9k-9500-9.3.8
 
