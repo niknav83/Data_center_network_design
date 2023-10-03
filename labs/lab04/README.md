@@ -244,10 +244,156 @@ ip 192.168.40.2 192.168.40.1 24
 </details>
 
 
+### Далее для общей связанности между всеми устройствами настроим протокол BGP.
 
+На Nexus необходимо для начала включить функцию BGP
 
+```
+feature bgp
+```
 
+Конфигурация BGP для Spine-1:
 
+```
+feature bgp
+feature bfd
+
+router bgp 65000
+  router-id 192.168.0.1
+  bestpath as-path multipath-relax
+  reconnect-interval 10
+  address-family ipv4 unicast
+    network 192.168.0.1/32
+    maximum-paths 10
+  neighbor 192.168.1.1
+    bfd
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 192.168.1.21
+    bfd
+    remote-as 65002
+    address-family ipv4 unicast
+  neighbor 192.168.1.31
+    bfd
+    remote-as 65003
+    address-family ipv4 unicast
+```
+
+ Конфигурация BGP для Spine-2:
+
+```
+feature bgp
+feature bfd
+
+router bgp 65000
+  router-id 192.168.0.2
+  bestpath as-path multipath-relax
+  reconnect-interval 10
+  address-family ipv4 unicast
+    network 192.168.0.2/32
+    maximum-paths 10
+  neighbor 192.168.2.1
+    bfd
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 192.168.2.21
+    bfd
+    remote-as 65002
+    address-family ipv4 unicast
+  neighbor 192.168.2.31
+    bfd
+    remote-as 65003
+    address-family ipv4 unicast
+```
+
+ Конфигурация BGP для Leaf-1:
+
+```
+feature bgp
+feature bfd
+
+route-map REDISTRIBUTE_CONNECTED permit 10
+  match interface Ethernet1/3 
+
+router bgp 65001
+  router-id 192.168.0.11
+  bestpath as-path multipath-relax
+  reconnect-interval 10
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 192.168.0.11/32
+    redistribute direct route-map REDISTRIBUTE_CONNECTED
+    maximum-paths 10
+  template peer SPINES
+    bfd
+    remote-as 65000
+    timers 3 9
+    address-family ipv4 unicast
+  neighbor 192.168.1.0
+    inherit peer SPINES
+  neighbor 192.168.2.0
+    inherit peer SPINES
+```
+
+ Конфигурация BGP для Leaf-2:
+
+```
+feature bgp
+feature bfd
+
+route-map REDISTRIBUTE_CONNECTED permit 10
+  match interface Ethernet1/3
+
+router bgp 65002
+  router-id 192.168.0.12
+  bestpath as-path multipath-relax
+  reconnect-interval 10
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 192.168.0.12/32
+    redistribute direct route-map REDISTRIBUTE_CONNECTED
+    maximum-paths 10
+  template peer SPINES
+    bfd
+    remote-as 65000
+    timers 3 9
+    address-family ipv4 unicast
+  neighbor 192.168.1.20
+    inherit peer SPINES
+  neighbor 192.168.2.20
+    inherit peer SPINES
+```
+
+ Конфигурация BGP для Leaf-3:
+
+```
+feature bgp
+feature bfd
+
+route-map REDISTRIBUTE_CONNECTED permit 10
+  match interface Ethernet1/3 Ethernet1/4
+
+router bgp 65003
+  router-id 192.168.0.13
+  bestpath as-path multipath-relax
+  reconnect-interval 10
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 192.168.0.13/32
+    redistribute direct route-map REDISTRIBUTE_CONNECTED
+    maximum-paths 10
+  template peer SPINES
+    bfd
+    remote-as 65000
+    timers 3 9
+    address-family ipv4 unicast
+  neighbor 192.168.1.30
+    inherit peer SPINES
+  neighbor 192.168.2.30
+    inherit peer SPINES
+```
+
+## Проверяем работу протокола BGP:
 
 
 
