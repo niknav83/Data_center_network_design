@@ -207,10 +207,41 @@ interface loopback0
 </details>
 
 
+<details>
+  
+<summary> Конфигурация интерфейсов для VPC1: </summary>
 
+```
+ip 192.168.10.2 192.168.10.1 24
+```
+<details>
 
+<details>
+  
+<summary> Конфигурация интерфейсов для VPC2: </summary>
 
+```
+ip 192.168.20.2 192.168.20.1 24
+```
+<details>
+  
+<details>
+    
+<summary> Конфигурация интерфейсов для VPC3: </summary>
 
+```
+ip 192.168.30.2 192.168.30.1 24
+```
+<details>
+
+<details>
+  
+<summary> Конфигурация интерфейсов для VPC4: </summary>
+
+```
+ip 192.168.40.2 192.168.40.1 24
+```
+<details>
 
 
 
