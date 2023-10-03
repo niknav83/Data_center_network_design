@@ -60,6 +60,170 @@
 
 ### Настроим интерфейсы и IP адреса на всех устройствах Underlay-сети.
 
+<details>
+
+<summary> Конфигурация интерфейсов для Spine-1: </summary>
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.0/31
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.20/31
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.30/31
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.1/32
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Spine-2: </summary>
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.0/31
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.20/31
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.30/31
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.2/32
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Leaf-1: </summary>
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.1/31
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.1/31
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.10.1/24
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.11/32
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Leaf-2: </summary>
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.21/31
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.21/31
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.20.1/24
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.12/32
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Leaf-3: </summary>
+
+```
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.31/31
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.31/31
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  ip address 192.168.30.1/24
+  no shutdown
+
+interface Ethernet1/4
+  mtu 9216
+  ip address 192.168.40.1/24
+  no shutdown
+
+interface loopback0
+  ip address 192.168.0.13/32
+```
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
