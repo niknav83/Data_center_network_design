@@ -3,4 +3,4 @@
  - [Lab02. Настроить OSPF для Underlay сети](lab02/)
  - [Lab03. Настроить IS-IS для Underlay сети](lab03/)
  - [Lab04. Настроить BGP для Underlay сети](lab04/)
-   
+ - [Lab04.2. Настроить iBGP для Underlay сети](lab04.2/)  
