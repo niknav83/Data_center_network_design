@@ -208,7 +208,7 @@ router ospf Underlay
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF Leaf-2: </summary>
+<summary> Конфигурация интерфейсов и OSPF для Leaf-2: </summary>
 
 ```
 interface loopback0
@@ -264,7 +264,7 @@ router ospf Underlay
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF Leaf-3: </summary>
+<summary> Конфигурация интерфейсов и OSPF для Leaf-3: </summary>
 
 ```
 interface loopback0
