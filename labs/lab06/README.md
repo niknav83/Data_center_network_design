@@ -56,7 +56,7 @@
 
 ### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab06/configs)
 
-В данной работе применялса образ nxosv9k-9500-9.3.8
+В данной работе применялса образ nxosv9k-9500-9.3.9
 
 Логин и пароль: admin 
 
