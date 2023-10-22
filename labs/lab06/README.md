@@ -2,7 +2,7 @@
 
 ## Цель:
 
-- Настроить Overlay на основе VxLAN EVPN для L2 связанности между клиентами
+
 
 
 ## В этой самостоятельной работе мы ожидаем, что вы самостоятельно:
@@ -66,54 +66,266 @@
 
 <details>
 
-<summary> Конфигурация интерфейсов для Spine-1: </summary>
+<summary> Конфигурация интерфейсов и OSPF для Spine-1: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.1/32
+  ip router ospf Underlay area 0.0.0.0
 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.1/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.21/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.33/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.1
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Spine-2: </summary>
+<summary>Конфигурация интерфейсов и OSPF для Spine-2: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.2/32
+  ip router ospf Underlay area 0.0.0.0
 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.1/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.21/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.33/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.2
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-1: </summary>
+<summary> Конфигурация интерфейсов и OSPF для Leaf-1: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.11/32
+  ip router ospf Underlay area 0.0.0.0
 
+interface loopback10
+  ip address 192.168.0.111/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface Vlan10
+  no shutdown
+  ip address 192.168.10.1/24
+ 
+interface Vlan20
+  no shutdown
+  ip address 192.168.20.1/24
+  
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.2/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.2/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  switchport
+  switchport access vlan 10
+  no shutdown
+
+interface Ethernet1/4
+  switchport
+  switchport access vlan 20
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.11
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-2: </summary>
+<summary> Конфигурация интерфейсов и OSPF Leaf-2: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.12/32
+  ip router ospf Underlay area 0.0.0.0
 
+interface loopback10
+  ip address 192.168.0.112/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface Vlan10
+  no shutdown
+  ip address 192.168.10.1/24
+  
+interface Vlan20
+  no shutdown
+  ip address 192.168.20.1/24
+ 
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.22/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.22/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  switchport
+  switchport access vlan 10
+  no shutdown
+
+interface Ethernet1/4
+  switchport
+  switchport access vlan 20
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.12
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-3: </summary>
+<summary> Конфигурация интерфейсов и OSPF Leaf-3: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.13/32
+  ip router ospf Underlay area 0.0.0.0
 
+interface loopback10
+  ip address 192.168.0.113/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface Vlan10
+  no shutdown
+  ip address 192.168.10.1/24
+
+interface Vlan20
+  no shutdown
+  ip address 192.168.20.1/24
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback10
+  member vni 10000
+    ingress-replication protocol bgp
+  member vni 20000
+    ingress-replication protocol bgp
+  member vni 99000 associate-vrf
+
+interface Ethernet1/1
+  mtu 9216
+  medium p2p
+  ip address 192.168.1.34/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  mtu 9216
+  medium p2p
+  ip address 192.168.2.34/30
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  switchport
+  switchport access vlan 10
+  no shutdown
+
+interface Ethernet1/4
+  switchport
+  switchport access vlan 20
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.13
+  passive-interface default
 ```
 </details>
-
-
 
 
 ### Далее на всех устройствах произведем необходимые настройки.
