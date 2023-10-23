@@ -84,6 +84,7 @@ net 49.0001.1921.6800.0001.00
 ## Схема стенда 
 ![img_1.png](img_1.png)
 
+
 ## Таблица адресов
 
 | Device  | Interface | IP Address   | Subnet Mask     | Default Gateway |
