@@ -657,9 +657,7 @@ evpn
 
 <details>
   
-<summary>Вывод команды :</summary>
-
-Spine-1
+<summary>Вывод команд для Spine-1 :</summary>
 
 ```
 Spine-1# show bgp l2vpn evpn summary
@@ -725,8 +723,11 @@ Route Distinguisher: 192.168.0.13:32787
 *>i[3]:[0]:[32]:[192.168.0.113]/88
                       192.168.0.113                     100          0 i
 ```
+</details>
 
-Spine-2
+<details>
+  
+<summary>Вывод команд для Spine-2 :</summary>
 
 ```
 Spine-2# show bgp l2vpn evpn summary
@@ -791,8 +792,11 @@ Route Distinguisher: 192.168.0.13:32787
 *>i[3]:[0]:[32]:[192.168.0.113]/88
                       192.168.0.113                     100          0 i
 ```
+</details>
 
-Leaf-1
+<details>
+  
+<summary>Вывод команд для Leaf-1 :</summary>
 
 ```
 Leaf-1# show bgp l2vpn evpn summary
@@ -942,7 +946,11 @@ Route Distinguisher: 192.168.0.11:3    (L3VNI 99000)
                       192.168.0.113                     100          0 i
 ```
 
-Leaf-2
+</details>
+
+<details>
+  
+<summary>Вывод команд для Leaf-2 :</summary>
 
 ```
 Leaf-2# show bgp l2vpn evpn summary
@@ -1090,7 +1098,11 @@ Route Distinguisher: 192.168.0.12:3    (L3VNI 99000)
 *>i[2]:[0]:[0]:[48]:[aabb.cc01.6000]:[32]:[192.168.20.4]/272
                       192.168.0.113                     100          0 i
 ```
-Leaf-3
+</details>
+
+<details>
+  
+<summary>Вывод команд для Leaf-3 :</summary>
 
 ```
 Leaf-3# show bgp l2vpn evpn summary
