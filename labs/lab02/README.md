@@ -20,6 +20,7 @@
 ## Схема стенда 
 ![img_1.png](img_3.png)
 
+
 ## Таблица адресов
 | Device  | Interface | IP Address   | Subnet Mask     | Default Gateway |
 |---------|-----------|--------------|-----------------|-----------------|
