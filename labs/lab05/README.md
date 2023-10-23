@@ -12,7 +12,7 @@
 
 ### Описание/Пошаговая инструкция выполнения домашнего задания:
 
-- В качестве Underlay-сети для IP-связанности будем использовать eBGP. Настройка eBGP проводилась в [предыдущей](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab04) лабораторной работе
+- В качестве Underlay-сети для IP-связанности будем использовать OSPF. 
 - Настроить eBGP peering в Address Family L2VPN EVPN, указать BGP-соседство с IP-адресами Loopback 0 соседних устройств
 - Выбрать VNI и VLAN ID. Создать VLAN и связать его с VNI на всех LEAF-коммутаторах
 - Создать интерфейсы Loopback 10 на LEAF-коммутаторах и задать им IP-адреса
@@ -65,164 +65,212 @@
 
 ## Приступаем к настрйке сети:
 
-### Настроим интерфейсы и IP адреса на всех устройствах Underlay-сети.
+### Настроим интерфейсы, IP адреса  и OSPF на всех устройствах Underlay-сети.
 
 <details>
 
-<summary> Конфигурация интерфейсов для Spine-1: </summary>
+<summary> Конфигурация для Spine-1: </summary>
 
 ```
-interface Ethernet1/1
-  mtu 9216
-  medium p2p
-  ip address 192.168.1.0/31
-  no shutdown
-
-interface Ethernet1/2
-  mtu 9216
-  medium p2p
-  ip address 192.168.1.20/31
-  no shutdown
-
-interface Ethernet1/3
-  mtu 9216
-  medium p2p
-  ip address 192.168.1.30/31
-  no shutdown
-
 interface loopback0
   ip address 192.168.0.1/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface Ethernet1/1
+  medium p2p
+  ip address 192.168.1.0/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  medium p2p
+  ip address 192.168.1.20/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  medium p2p
+  ip address 192.168.1.30/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.1
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Spine-2: </summary>
+<summary> Конфигурация для Spine-2: </summary>
 
 ```
-interface Ethernet1/1
-  mtu 9216
-  medium p2p
-  ip address 192.168.2.0/31
-  no shutdown
-
-interface Ethernet1/2
-  mtu 9216
-  medium p2p
-  ip address 192.168.2.20/31
-  no shutdown
-
-interface Ethernet1/3
-  mtu 9216
-  medium p2p
-  ip address 192.168.2.30/31
-  no shutdown
-
 interface loopback0
   ip address 192.168.0.2/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface Ethernet1/1
+  medium p2p
+  ip address 192.168.2.0/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/2
+  medium p2p
+  ip address 192.168.2.20/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/3
+  medium p2p
+  ip address 192.168.2.30/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
+  no shutdown
+
+router ospf Underlay
+  router-id 192.168.0.2
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-1: </summary>
+<summary> Конфигурация для Leaf-1: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.11/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface loopback10
+  ip address 192.168.0.111/32
+  ip router ospf Underlay area 0.0.0.0
+
 interface Ethernet1/1
-  mtu 9216
   medium p2p
   ip address 192.168.1.1/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
   medium p2p
   ip address 192.168.2.1/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/3
-  description CLIENT-1
   switchport
   switchport access vlan 10
   no shutdown
 
 interface loopback0
   ip address 192.168.0.11/32
-
-interface loopback10
-  ip address 192.168.0.111/32
+  ip router ospf Underlay area 0.0.0.0
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-2: </summary>
+<summary> Конфигурация  для Leaf-2: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.12/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface loopback10
+  ip address 192.168.0.112/32
+  ip router ospf Underlay area 0.0.0.0
+
 interface Ethernet1/1
-  mtu 9216
   medium p2p
   ip address 192.168.1.21/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
   medium p2p
   ip address 192.168.2.21/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/3
-  description CLIENT-2
   switchport
   switchport access vlan 20
   no shutdown
 
-interface loopback0
-  ip address 192.168.0.12/32
-
-interface loopback10
-  ip address 192.168.0.112/32
+router ospf Underlay
+  router-id 192.168.0.12
+  passive-interface default
 ```
 </details>
 
 
 <details>
 
-<summary> Конфигурация интерфейсов для Leaf-3: </summary>
+<summary> Конфигурация  для Leaf-3: </summary>
 
 ```
+interface loopback0
+  ip address 192.168.0.13/32
+  ip router ospf Underlay area 0.0.0.0
+
+interface loopback10
+  ip address 192.168.0.113/32
+  ip router ospf Underlay area 0.0.0.0
+
 interface Ethernet1/1
-  mtu 9216
   medium p2p
   ip address 192.168.1.31/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/2
-  mtu 9216
   medium p2p
   ip address 192.168.2.31/31
+  ip ospf network point-to-point
+  no ip ospf passive-interface
+  ip router ospf Underlay area 0.0.0.0
   no shutdown
 
 interface Ethernet1/3
-  description CLIENT-2
   switchport
   switchport access vlan 10
   no shutdown
 
 interface Ethernet1/4
-  description CLIENT-3
   switchport
   switchport access vlan 20
   no shutdown
 
-interface loopback0
-  ip address 192.168.0.13/32
-
-interface loopback10
-  ip address 192.168.0.113/32
+router ospf Underlay
+  router-id 192.168.0.13
+  passive-interface default
 ```
 </details>
 
@@ -231,150 +279,121 @@ interface loopback10
 
 ### Далее на всех устройствах произведем необходимые настройки.
 
-На Nexus необходимо для начала включить функции
-
-```
-nv overlay evpn
-feature bgp
-feature bfd
-```
 
 Конфигурация для Spine-1:
 
 ```
+nv overlay evpn
+feature ospf
+feature bgp
+feature bfd
+
+route-map NEXT-HOP-UNCH permit 10
+  set ip next-hop unchanged
+
 router bgp 65000
   router-id 192.168.0.1
-  bestpath as-path multipath-relax
-  address-family ipv4 unicast
-    network 192.168.0.1/32
-    maximum-paths 4
+  timers bgp 3 9
+  reconnect-interval 10
   address-family l2vpn evpn
-    nexthop route-map NEXT-HOP-UNCH
+    maximum-paths 10
     retain route-target all
-  template peer LEAF-IPv4
-    bfd
-    address-family ipv4 unicast
-  template peer LEAF-L2VPN
+  template peer LEAVES
     update-source loopback0
-    disable-connected-check
-    ebgp-multihop 3
+    ebgp-multihop 2
     address-family l2vpn evpn
-      disable-peer-as-check
       send-community
       send-community extended
       route-map NEXT-HOP-UNCH out
       rewrite-evpn-rt-asn
   neighbor 192.168.0.11
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65001
   neighbor 192.168.0.12
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65002
   neighbor 192.168.0.13
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65003
-  neighbor 192.168.1.1
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65001
-    update-source Ethernet1/1
-  neighbor 192.168.1.21
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65002
-    update-source Ethernet1/2
-  neighbor 192.168.1.31
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65003
-    update-source Ethernet1/3
+
 ```
 
  Конфигурация для Spine-2:
 
 ```
+nv overlay evpn
+feature ospf
+feature bgp
+feature bfd
+
+route-map NEXT-HOP-UNCH permit 10
+  set ip next-hop unchanged
+
 router bgp 65000
   router-id 192.168.0.2
-  bestpath as-path multipath-relax
-  address-family ipv4 unicast
-    network 192.168.0.2/32
-    maximum-paths 4
+  timers bgp 3 9
+  reconnect-interval 10
   address-family l2vpn evpn
-    nexthop route-map NEXT-HOP-UNCH
+    maximum-paths 10
     retain route-target all
-  template peer LEAF-IPv4
-    bfd
-    address-family ipv4 unicast
-  template peer LEAF-L2VPN
+  template peer LEAVES
     update-source loopback0
-    disable-connected-check
-    ebgp-multihop 3
+    ebgp-multihop 2
     address-family l2vpn evpn
-      disable-peer-as-check
       send-community
       send-community extended
       route-map NEXT-HOP-UNCH out
       rewrite-evpn-rt-asn
   neighbor 192.168.0.11
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65001
   neighbor 192.168.0.12
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65002
   neighbor 192.168.0.13
-    inherit peer LEAF-L2VPN
+    inherit peer LEAVES
     remote-as 65003
-  neighbor 192.168.2.1
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65001
-    update-source Ethernet1/1
-  neighbor 192.168.2.21
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65002
-    update-source Ethernet1/2
-  neighbor 192.168.2.31
-    inherit peer LEAF-IPv4
-    bfd
-    remote-as 65003
-    update-source Ethernet1/3
 ```
 
  Конфигурация для Leaf-1:
 
 ```
+nv overlay evpn
+feature ospf
+feature bgp
+feature vn-segment-vlan-based
+feature bfd
+feature nv overlay
+
+vlan 1,10
+vlan 10
+  vn-segment 10010
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback10
+  member vni 10010
+    ingress-replication protocol bgp
+
 router bgp 65001
   router-id 192.168.0.11
-  bestpath as-path multipath-relax
-  address-family ipv4 unicast
-    network 192.168.0.11/32
-    network 192.168.0.111/32
-    maximum-paths 4
+  timers bgp 3 9
+  reconnect-interval 10
   address-family l2vpn evpn
-    retain route-target all
-  template peer SPINE-IPv4
-    bfd
-    remote-as 65000
-    address-family ipv4 unicast
-  template peer SPINE-L2VPN
+    maximum-paths 10
+  template peer SPINES
     remote-as 65000
     update-source loopback0
-    ebgp-multihop 3
+    ebgp-multihop 2
     address-family l2vpn evpn
       send-community
       send-community extended
       rewrite-evpn-rt-asn
   neighbor 192.168.0.1
-    inherit peer SPINE-L2VPN
+    inherit peer SPINES
   neighbor 192.168.0.2
-    inherit peer SPINE-L2VPN
-  neighbor 192.168.1.0
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/1
-  neighbor 192.168.2.0
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/2
+    inherit peer SPINES
 evpn
   vni 10010 l2
     rd auto
@@ -385,36 +404,42 @@ evpn
  Конфигурация для Leaf-2:
 
 ```
+nv overlay evpn
+feature ospf
+feature bgp
+feature vn-segment-vlan-based
+feature bfd
+feature nv overlay
+
+vlan 1,20
+vlan 20
+  vn-segment 10020
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback10
+  member vni 10020
+    ingress-replication protocol bgp
+
 router bgp 65002
   router-id 192.168.0.12
-  bestpath as-path multipath-relax
-  address-family ipv4 unicast
-    network 192.168.0.12/32
-    network 192.168.0.112/32
-    maximum-paths 4
+  timers bgp 3 9
+  reconnect-interval 10
   address-family l2vpn evpn
-    retain route-target all
-  template peer SPINE-IPv4
-    bfd
-    remote-as 65000
-    address-family ipv4 unicast
-  template peer SPINE-L2VPN
+    maximum-paths 10
+  template peer SPINES
     remote-as 65000
     update-source loopback0
-    ebgp-multihop 3
+    ebgp-multihop 2
     address-family l2vpn evpn
       send-community
       send-community extended
+      rewrite-evpn-rt-asn
   neighbor 192.168.0.1
-    inherit peer SPINE-L2VPN
+    inherit peer SPINES
   neighbor 192.168.0.2
-    inherit peer SPINE-L2VPN
-  neighbor 192.168.1.20
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/1
-  neighbor 192.168.2.20
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/2
+    inherit peer SPINES
 evpn
   vni 10020 l2
     rd auto
@@ -425,37 +450,46 @@ evpn
  Конфигурация для Leaf-3:
 
 ```
+nv overlay evpn
+feature ospf
+feature bgp
+feature vn-segment-vlan-based
+feature bfd
+feature nv overlay
+
+vlan 1,10,20
+vlan 10
+  vn-segment 10010
+vlan 20
+  vn-segment 10020
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback10
+  member vni 10010
+    ingress-replication protocol bgp
+  member vni 10020
+    ingress-replication protocol bgp
+
 router bgp 65003
   router-id 192.168.0.13
-  bestpath as-path multipath-relax
-  address-family ipv4 unicast
-    network 192.168.0.13/32
-    network 192.168.0.113/32
-    maximum-paths 4
+  timers bgp 3 9
+  reconnect-interval 10
   address-family l2vpn evpn
-    retain route-target all
-  template peer SPINE-IPv4
-    bfd
-    remote-as 65000
-    address-family ipv4 unicast
-  template peer SPINE-L2VPN
+    maximum-paths 10
+  template peer SPINES
     remote-as 65000
     update-source loopback0
-    ebgp-multihop 3
+    ebgp-multihop 2
     address-family l2vpn evpn
       send-community
       send-community extended
       rewrite-evpn-rt-asn
   neighbor 192.168.0.1
-    inherit peer SPINE-L2VPN
+    inherit peer SPINES
   neighbor 192.168.0.2
-    inherit peer SPINE-L2VPN
-  neighbor 192.168.1.30
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/1
-  neighbor 192.168.2.30
-    inherit peer SPINE-IPv4
-    update-source Ethernet1/2
+    inherit peer SPINES
 evpn
   vni 10010 l2
     rd auto
