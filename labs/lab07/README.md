@@ -1074,6 +1074,7 @@ Total Mac Addresses for this criterion: 0
 </details>
 
 
+<details>
 <summary>Вывод команд для vEOS6 :</summary>
 
 ```
