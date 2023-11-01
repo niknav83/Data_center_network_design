@@ -402,6 +402,7 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 10,20 vni 10010,10020
    vxlan vrf PROD vni 100999
+   vxlan learn-restrict any
 !
 ip virtual-router mac-address 00:00:11:11:22:22
 !
@@ -468,7 +469,7 @@ interface Vxlan1
 ip virtual-router mac-address 00:00:11:11:22:22
 !
 ip routing
-no ip routing vrf PROD
+ip routing vrf PROD
 !
 router bgp 65000
    router-id 192.168.0.12
@@ -501,8 +502,9 @@ router bgp 65000
       no neighbor 192.168.0.2 activate
    !
    vrf PROD
+      rd 192.168.0.12:1
       route-target import evpn 65000:100999
-      route-target export evpn 65000:100999 
+      route-target export evpn 65000:100999
 ```
 
  Конфигурация для Leaf-3:
@@ -515,6 +517,7 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 10,20 vni 10010,10020
    vxlan vrf PROD vni 100999
+   vxlan learn-restrict any
 !
 ip virtual-router mac-address 00:00:11:11:22:22
 !
@@ -552,9 +555,9 @@ router bgp 65000
       no neighbor 192.168.0.2 activate
    !
    vrf PROD
-      rd 192.168.0.11:1
+      rd 192.168.0.13:1
       route-target import evpn 65000:100999
-      route-target export evpn 65000:100999  
+      route-target export evpn 65000:100999
 ```
 
  Конфигурация для vEOS6:
@@ -596,10 +599,9 @@ BGP summary information for VRF default
 Router identifier 192.168.0.1, local AS number 65000
 Neighbor Status Codes: m - Under maintenance
   Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
-  192.168.0.11     4  65000            944       950    0    0 13:15:34 Estab  6      6
-  192.168.0.12     4  65000            951       949    0    0 13:15:31 Estab  6      6
-  192.168.0.13     4  65000            945       959    0    0 13:15:33 Estab  6      6
-
+  192.168.0.11     4  65000            739       758    0    0 10:20:24 Estab  4      4
+  192.168.0.12     4  65000            752       745    0    0 10:20:33 Estab  8      8
+  192.168.0.13     4  65000            736       757    0    0 10:20:32 Estab  6      6
 ```
 ```
 SPINE-1#show bgp evpn
@@ -620,10 +622,10 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
                              192.168.0.112    -       100     0       i
- * >     RD: 192.168.0.111:10 mac-ip 5000.0072.8b31 192.168.10.10
-                             192.168.0.111    -       100     0       i
- * >     RD: 192.168.0.111:20 mac-ip 5000.0072.8b31 192.168.20.20
-                             192.168.0.111    -       100     0       i
+ * >     RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i
+ * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
@@ -648,7 +650,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.113    -       100     0       i
  * >     RD: 192.168.0.113:20 imet 192.168.0.113
                              192.168.0.113    -       100     0       i
-
 ```
 </details>
 
@@ -662,9 +663,9 @@ BGP summary information for VRF default
 Router identifier 192.168.0.2, local AS number 65000
 Neighbor Status Codes: m - Under maintenance
   Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
-  192.168.0.11     4  65000            947       954    0    0 13:16:32 Estab  6      6
-  192.168.0.12     4  65000            951       957    0    0 13:16:29 Estab  6      6
-  192.168.0.13     4  65000            945       960    0    0 13:16:32 Estab  6      6
+  192.168.0.11     4  65000            739       766    0    0 10:22:42 Estab  4      4
+  192.168.0.12     4  65000            755       750    0    0 10:22:47 Estab  8      8
+  192.168.0.13     4  65000            742       764    0    0 10:22:49 Estab  6      6
 ```
 ```
 SPINE-2#show bgp evpn
@@ -685,10 +686,10 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
                              192.168.0.112    -       100     0       i
- * >     RD: 192.168.0.111:10 mac-ip 5000.0072.8b31 192.168.10.10
-                             192.168.0.111    -       100     0       i
- * >     RD: 192.168.0.111:20 mac-ip 5000.0072.8b31 192.168.20.20
-                             192.168.0.111    -       100     0       i
+ * >     RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i
+ * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
@@ -713,7 +714,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.113    -       100     0       i
  * >     RD: 192.168.0.113:20 imet 192.168.0.113
                              192.168.0.113    -       100     0       i
-
 ```
 </details>
 
@@ -727,8 +727,8 @@ BGP summary information for VRF default
 Router identifier 192.168.0.11, local AS number 65000
 Neighbor Status Codes: m - Under maintenance
   Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
-  192.168.0.1      4  65000            952       946    0    0 13:17:16 Estab  12     12
-  192.168.0.2      4  65000            954       948    0    0 13:17:20 Estab  12     12
+  192.168.0.1      4  65000            762       743    0    0 10:23:36 Estab  14     14
+  192.168.0.2      4  65000            767       740    0    0 10:23:36 Estab  14     14
 ```
 ```
 Leaf-1#show bgp evpn
@@ -743,16 +743,32 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
          Network             Next Hop         Metric  LocPref Weight Path
  * >     RD: 192.168.0.111:10 mac-ip 5000.0072.8b31
                              -                -       -       0       i
- * >     RD: 192.168.0.111:10 mac-ip 5000.0072.8b31 192.168.10.10
+ * >     RD: 192.168.0.111:20 mac-ip 5000.0072.8b31
                              -                -       -       0       i
+ * >Ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ * >Ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ * >Ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ * >Ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  * >Ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
  * >Ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
-                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
- *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  * >Ec   RD: 192.168.0.113:20 mac-ip aabb.cc00.8000
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.113:20 mac-ip aabb.cc00.8000
@@ -766,9 +782,9 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
  * >Ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
-                             192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
- *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
+                             192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  * >     RD: 192.168.0.111:10 imet 192.168.0.111
                              -                -       -       0       i
  * >     RD: 192.168.0.111:20 imet 192.168.0.111
@@ -789,6 +805,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.113:20 imet 192.168.0.113
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
+
 ```
 ```
 Leaf-1#show mac address-table
@@ -797,13 +814,14 @@ Leaf-1#show mac address-table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-  10    5000.0072.8b31    DYNAMIC     Po1        1       0:00:31 ago
-  10    aabb.cc00.9000    DYNAMIC     Vx1        1       13:19:10 ago
-  20    5000.0072.8b31    DYNAMIC     Po1        1       0:00:19 ago
-  20    aabb.cc00.7000    DYNAMIC     Vx1        1       13:19:08 ago
-  20    aabb.cc00.8000    DYNAMIC     Vx1        1       13:19:10 ago
-1008    5000.0015.f4e8    DYNAMIC     Vx1        1       0:30:02 ago
-Total Mac Addresses for this criterion: 6
+  10    5000.0072.8b31    DYNAMIC     Po1        1       0:10:15 ago
+  10    aabb.cc00.9000    DYNAMIC     Vx1        1       10:24:26 ago
+  20    5000.0072.8b31    DYNAMIC     Po1        1       0:11:20 ago
+  20    aabb.cc00.7000    DYNAMIC     Vx1        1       10:24:26 ago
+  20    aabb.cc00.8000    DYNAMIC     Vx1        1       10:24:26 ago
+1008    5000.0003.3766    DYNAMIC     Vx1        1       0:11:22 ago
+1008    5000.0015.f4e8    DYNAMIC     Vx1        1       9:40:11 ago
+Total Mac Addresses for this criterion: 7
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -811,7 +829,6 @@ Total Mac Addresses for this criterion: 6
 Vlan    Mac Address       Type        Ports
 ----    -----------       ----        -----
 Total Mac Addresses for this criterion: 0
-
 ```
 ```
 Leaf-1#show interfaces port-Channel 1 status
@@ -824,7 +841,7 @@ Port Channel Port-Channel1 (Fallback State: Unconfigured):
   Active Ports:
        Port            Time became active       Protocol    Mode
     --------------- ------------------------ -------------- ------
-       Ethernet8       Sun 17:33:23             LACP        Active
+       Ethernet8       Tue 18:24:35             LACP        Active
 ```
 ```
 Leaf-1#show lacp interface
@@ -857,8 +874,8 @@ BGP summary information for VRF default
 Router identifier 192.168.0.12, local AS number 65000
 Neighbor Status Codes: m - Under maintenance
   Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
-  192.168.0.1      4  65000            961       961    0    0 13:22:22 Estab  12     12
-  192.168.0.2      4  65000            968       959    0    0 13:22:25 Estab  12     12
+  192.168.0.1      4  65000            753       761    0    0 10:26:34 Estab  10     10
+  192.168.0.2      4  65000            755       762    0    0 10:26:34 Estab  10     10
 
 ```
 ```
@@ -884,14 +901,10 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              -                -       -       0       i
  * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
                              -                -       -       0       i
- * >Ec   RD: 192.168.0.111:10 mac-ip 5000.0072.8b31 192.168.10.10
-                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.1
- *  ec   RD: 192.168.0.111:10 mac-ip 5000.0072.8b31 192.168.10.10
-                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.2
- * >Ec   RD: 192.168.0.111:20 mac-ip 5000.0072.8b31 192.168.20.20
-                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.2
- *  ec   RD: 192.168.0.111:20 mac-ip 5000.0072.8b31 192.168.20.20
-                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.1
+ * >     RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             -                -       -       0       i
+ * >     RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             -                -       -       0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              -                -       -       0       i
  * >     RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
@@ -909,9 +922,9 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
  * >Ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
-                             192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
- *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.113:10 mac-ip aabb.cc00.9000 192.168.10.2
+                             192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  * >Ec   RD: 192.168.0.111:10 imet 192.168.0.111
                              192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.111:10 imet 192.168.0.111
@@ -940,12 +953,13 @@ Leaf-2#show mac address-table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-  10    aabb.cc00.9000    DYNAMIC     Vx1        1       13:23:39 ago
-  20    5000.0072.8b31    DYNAMIC     Po1        1       0:05:04 ago
-  20    aabb.cc00.7000    DYNAMIC     Et7        1       13:23:40 ago
-  20    aabb.cc00.8000    DYNAMIC     Vx1        1       13:23:39 ago
-1008    5000.0015.f4e8    DYNAMIC     Vx1        1       0:34:57 ago
-Total Mac Addresses for this criterion: 5
+  10    5000.0072.8b31    DYNAMIC     Po1        1       0:03:02 ago
+  10    aabb.cc00.9000    DYNAMIC     Vx1        1       10:27:25 ago
+  20    5000.0072.8b31    DYNAMIC     Po1        1       0:14:09 ago
+  20    aabb.cc00.7000    DYNAMIC     Et7        1       10:27:29 ago
+  20    aabb.cc00.8000    DYNAMIC     Vx1        1       10:27:25 ago
+1008    5000.0015.f4e8    DYNAMIC     Vx1        1       9:43:04 ago
+Total Mac Addresses for this criterion: 6
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -966,7 +980,7 @@ Port Channel Port-Channel1 (Fallback State: Unconfigured):
   Active Ports:
        Port            Time became active       Protocol    Mode
     --------------- ------------------------ -------------- ------
-       Ethernet8       Sun 17:33:27             LACP        Active
+       Ethernet8       Tue 18:24:35             LACP        Active
 ```
 ```
 Leaf-2#show lacp interface
@@ -998,8 +1012,8 @@ BGP summary information for VRF default
 Router identifier 192.168.0.13, local AS number 65000
 Neighbor Status Codes: m - Under maintenance
   Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
-  192.168.0.1      4  65000            982       959    0    0 13:27:08 Estab  6      6
-  192.168.0.2      4  65000            981       957    0    0 13:27:12 Estab  6      6
+  192.168.0.1      4  65000            776       751    0    0 10:32:45 Estab  12     12
+  192.168.0.2      4  65000            781       754    0    0 10:32:49 Estab  12     12
 ```
 ```
 Leaf-3#show bgp evpn
@@ -1012,14 +1026,38 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
 
          Network             Next Hop         Metric  LocPref Weight Path
+ * >Ec   RD: 192.168.0.111:10 mac-ip 5000.0072.8b31
+                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.2
+ *  ec   RD: 192.168.0.111:10 mac-ip 5000.0072.8b31
+                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.1
+ * >Ec   RD: 192.168.0.111:20 mac-ip 5000.0072.8b31
+                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.2
+ *  ec   RD: 192.168.0.111:20 mac-ip 5000.0072.8b31
+                             192.168.0.111    -       100     0       i Or-ID: 192.168.0.11 C-LST: 192.168.0.1
+ * >Ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ *  ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ * >Ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ * >Ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
+ *  ec   RD: 192.168.0.112:10 mac-ip 5000.0072.8b31 192.168.10.10
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ * >Ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip 5000.0072.8b31 192.168.20.20
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  * >Ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
  * >Ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
-                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
- *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
                              192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
+ *  ec   RD: 192.168.0.112:20 mac-ip aabb.cc00.7000 192.168.20.2
+                             192.168.0.112    -       100     0       i Or-ID: 192.168.0.12 C-LST: 192.168.0.2
  * >     RD: 192.168.0.113:20 mac-ip aabb.cc00.8000
                              -                -       -       0       i
  * >     RD: 192.168.0.113:20 mac-ip aabb.cc00.8000 192.168.20.3
@@ -1048,6 +1086,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              -                -       -       0       i
  * >     RD: 192.168.0.113:20 imet 192.168.0.113
                              -                -       -       0       i
+
 ```
 ```
 Leaf-3#show mac address-table
@@ -1056,9 +1095,9 @@ Leaf-3#show mac address-table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-  10    aabb.cc00.9000    DYNAMIC     Et8        1       13:27:56 ago
-  20    aabb.cc00.7000    DYNAMIC     Vx1        1       13:27:48 ago
-  20    aabb.cc00.8000    DYNAMIC     Et7        1       13:27:56 ago
+  10    aabb.cc00.9000    DYNAMIC     Et8        1       10:33:47 ago
+  20    aabb.cc00.7000    DYNAMIC     Vx1        1       10:33:43 ago
+  20    aabb.cc00.8000    DYNAMIC     Et7        1       10:33:47 ago
 Total Mac Addresses for this criterion: 3
 
           Multicast Mac Address Table
@@ -1082,10 +1121,13 @@ vEOS6#show mac address-table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-  10    aabb.cc00.9000    DYNAMIC     Po1        1       13:28:30 ago
-  20    aabb.cc00.7000    DYNAMIC     Po1        1       13:29:05 ago
-  20    aabb.cc00.8000    DYNAMIC     Po1        1       13:28:17 ago
-Total Mac Addresses for this criterion: 3
+  10    5000.0003.3766    DYNAMIC     Po1        1       0:21:33 ago
+  10    5000.0015.f4e8    DYNAMIC     Po1        1       0:20:45 ago
+  10    aabb.cc00.9000    DYNAMIC     Po1        1       10:34:06 ago
+  20    5000.0015.f4e8    DYNAMIC     Po1        1       0:20:27 ago
+  20    aabb.cc00.7000    DYNAMIC     Po1        1       10:34:02 ago
+  20    aabb.cc00.8000    DYNAMIC     Po1        1       10:34:51 ago
+Total Mac Addresses for this criterion: 6
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -1093,13 +1135,11 @@ Total Mac Addresses for this criterion: 3
 Vlan    Mac Address       Type        Ports
 ----    -----------       ----        -----
 Total Mac Addresses for this criterion: 0
-
 ```
 ```
 vEOS6#show interfaces port-Channel 1 status
 Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
 Po1               connected    trunk    full   unconf N/A
-
 ```
 ```
 vEOS6#show port-channel 1 active-ports detailed
@@ -1107,10 +1147,8 @@ Port Channel Port-Channel1 (Fallback State: Unconfigured):
   Active Ports:
        Port            Time became active       Protocol    Mode
     --------------- ------------------------ -------------- ------
-       Ethernet1       Sun 17:33:22             LACP        Active
-       Ethernet2       Sun 17:33:26             LACP        Active
-
-
+       Ethernet1       Tue 18:24:35             LACP        Active
+       Ethernet2       Tue 18:24:34             LACP        Active
 ```
 ```
 vEOS6#show lacp interface
@@ -1131,7 +1169,6 @@ Et2  Bundled | 8000,11-11-22-22-33-33      8  ALGs+CD   0x0001    32768      2
 Port Channel Port-Channel1:
    Et1          Bundled  |   ALGs+CD        0x0001           32768
    Et2          Bundled  |   ALGs+CD        0x0001           32768
-
 ```
 
 </details>
