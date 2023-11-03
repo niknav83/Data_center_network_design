@@ -1,7 +1,7 @@
-### VxLAN. Оптимизация таблиц маршрутизации
+## VxLAN. Оптимизация таблиц маршрутизации
 
   
-## Цель:
+### Цель:
 
 - Реализовать передачу суммарных префиксов через EVPN Route Type 5
   
@@ -16,7 +16,14 @@
 - Настроить устройство DNS в AS 65005:
     - Интерфейсы, IP-адресация
     - eBGP
+- На DNS создать интерфейс Loopback 1, Loopback 2 и задать им IP-адреса: они будет имитировать узел из внешней сети - 77.88.8.0/24
+- Анонсировать на DNS в BGP суммарный маршрут с префиксом: 77.88.8.0/24
+- LEAF3 выбран в качестве Border. На нём необходимо настроить eBGP с DNS
+- Интерфейс LEAF3 для соединения с DNS добавить в VRF PROD
+- Настройки для eBGP на LEAF3 выполнить в VRF PROD:
+    - Анонсировать суммарный маршрут для всех клиентских сетей - 192.168.0.0/16
 - Выполнить проверку наличия Route Type 5 и общую проверку работоспособности фабрики
+
 
 ## Схема стенда 
 ![img_1.png](img_1.PNG)
@@ -70,11 +77,11 @@
 
 ## Приступаем к настрйке сети:
 
-### Настроим интерфейсы, IP адреса и OSPF на всех устройствах Underlay-сети.
+### Настройка сети из предыдущей работы.
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF для Spine-1: </summary>
+<summary> Конфигурация для Spine-1: </summary>
 
 ```
 service routing protocols model multi-agent
@@ -149,7 +156,7 @@ router ospf 1
 
 <details>
 
-<summary>Конфигурация интерфейсов и OSPF для Spine-2: </summary>
+<summary>Конфигурация для Spine-2: </summary>
 
 ```
 service routing protocols model multi-agent
@@ -224,7 +231,7 @@ router ospf 1
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF для Leaf-1: </summary>
+<summary> Конфигурация для Leaf-1: </summary>
 
 ```
 service routing protocols model multi-agent
@@ -339,7 +346,7 @@ router ospf 1
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF для Leaf-2: </summary>
+<summary> Конфигурация для Leaf-2: </summary>
 
 ```
 service routing protocols model multi-agent
@@ -457,7 +464,7 @@ router ospf 1
 
 <details>
 
-<summary> Конфигурация интерфейсов и OSPF для Leaf-3: </summary>
+<summary> Конфигурация для Leaf-3: </summary>
 
 ```
 service routing protocols model multi-agent
@@ -551,7 +558,7 @@ router ospf 1
 </details>
 
 
-### Далее на всех устройствах произведем необходимые настройки.
+### Далее произведем необходимые настройки.
 
  Конфигурация для Leaf-3:
 
@@ -646,8 +653,7 @@ router bgp 65005
  exit-address-family
 ```
 
-### Проверка работоспособности EVPN / VxLAN. Проверяем соседство по L2VPN между устройствами и таблицу маршрутизации. На LEAF-коммутаторах проверяем также NVE Peers:
-
+### Проверка работоспособности EVPN / VxLAN и Route Type 5
 
 
 <details>
