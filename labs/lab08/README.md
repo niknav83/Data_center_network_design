@@ -21,7 +21,7 @@
 
 <details>
 
-## <summary> ## Таблица адресов: </summary>
+<summary> ## Таблица адресов: </summary>
 
 | Device  | Interface | IP Address   | Subnet Mask     | Default Gateway |
 |---------|-----------|--------------|-----------------|-----------------|
