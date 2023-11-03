@@ -7,4 +7,4 @@
  - [Lab05. VxLAN. EVPN L2](lab05/)
  - [Lab06. VxLAN. EVPN L3](lab06/)
  - [Lab07. VxLAN. vPC](lab07/)
- - [Lab08: VxLAN. Оптимизация таблиц маршрутизации](/lab08)
+ - [Lab08: VxLAN. Оптимизация таблиц маршрутизации](/lab08/)
