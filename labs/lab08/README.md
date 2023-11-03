@@ -766,7 +766,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  *  ec   192.168.20.2/32     192.168.0.112    -       100     0      i Or-ID: 192.168.0.12 C-LST: 192.168.0.1
  * >Ec   192.168.20.3/32     192.168.0.113    -       100     0      i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  *  ec   192.168.20.3/32     192.168.0.113    -       100     0      i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
-
 ```
 ```
 Leaf-1#show bgp evpn route-type ?
@@ -910,7 +909,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  *  ec   192.168.10.2/32     192.168.0.113    -       100     0      i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
  * >Ec   192.168.20.3/32     192.168.0.113    -       100     0      i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  *  ec   192.168.20.3/32     192.168.0.113    -       100     0      i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
-
 ```
 ```
 Leaf-2#show bgp evpn route-type ?
@@ -946,11 +944,8 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.2
  *  ec   RD: 192.168.0.13:1 ip-prefix 192.168.0.0/16
                              192.168.0.113    -       100     0       i Or-ID: 192.168.0.13 C-LST: 192.168.0.1
-
-```
 ```
 
-```
 </details>
 
 <details>
