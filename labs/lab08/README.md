@@ -60,7 +60,7 @@
 
 
 
-### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab07/configs)
+### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab08/configs)
 
 В данной работе применялса образ Arista (vEOS, EOS-4.21.1.1F) 
 
