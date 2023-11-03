@@ -19,9 +19,7 @@
 ## Схема стенда 
 ![img_1.png](img_1.PNG)
 
-<details>
-
-<summary> ## Таблица адресов: </summary>
+## Таблица адресов
 
 | Device  | Interface | IP Address   | Subnet Mask     | Default Gateway |
 |---------|-----------|--------------|-----------------|-----------------|
@@ -60,7 +58,7 @@
 |         | eth0/0    | 1.1.1.2      | 255.255.255.252 |                 |
 
 
-<details>
+
 
 ### [Файлы конфигураций устройст и сама работа выполненная в EVE-NG ](https://github.com/niknav83/Data_center_network_design/tree/main/labs/lab07/configs)
 
