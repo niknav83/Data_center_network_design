@@ -52,3 +52,350 @@
 | Leaf 5  | lo        | 10.255.3.1 | 255.255.255.255 |                 |
 |         | Eth1      | 10.0.1.18  | 255.255.255.252 |                 |
 |         | Eth2      | 10.0.2.18  | 255.255.255.252 |                 |
+
+
+
+## Приступаем к настрйке сети:
+
+### Настроим интерфейсы, IP адреса и OSPF на всех устройствах Underlay-сети.
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Spine-1: </summary>
+
+```
+hostname Spine-1
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.1/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.1.5/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+   mtu 9214
+   no switchport
+   ip address 10.0.1.9/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet4
+   mtu 9214
+   no switchport
+   ip address 10.0.1.13/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet5
+   mtu 9214
+   no switchport
+   ip address 10.0.1.17/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.0.1/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.0.1
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   no passive-interface Ethernet3
+   no passive-interface Ethernet4
+   no passive-interface Ethernet5
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+<details>
+
+<summary>Конфигурация интерфейсов и OSPF для Spine-2: </summary>
+
+```
+hostname Spine-2
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.2.1/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.5/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+   mtu 9214
+   no switchport
+   ip address 10.0.2.9/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet4
+   mtu 9214
+   no switchport
+   ip address 10.0.2.13/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet5
+   mtu 9214
+   no switchport
+   ip address 10.0.2.17/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.0.2/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.0.2
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   no passive-interface Ethernet3
+   no passive-interface Ethernet4
+   no passive-interface Ethernet5
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Leaf-1: </summary>
+
+```
+hostname Leaf-1
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.2/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.2/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.1.1/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.1.1
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Leaf-2: </summary>
+
+```
+hostname Leaf-2
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.6/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.6/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.1.2/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.1.2
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Leaf-3: </summary>
+
+```
+hostname Leaf-3
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.10/30
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.10/30
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.2.1/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.2.1
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Leaf-4: </summary>
+
+```
+hostname Leaf-4
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.14/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.14/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.2.2/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.2.2
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и OSPF для Leaf-5: </summary>
+
+```
+hostname Leaf-5
+!
+interface Ethernet1
+   mtu 9214
+   no switchport
+   ip address 10.0.1.18/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   mtu 9214
+   no switchport
+   ip address 10.0.2.18/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Loopback0
+   ip address 10.255.3.1/32
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.3.1
+   bfd all-interfaces
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+```
+</details>
+
+
+
