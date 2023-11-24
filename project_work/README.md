@@ -1666,6 +1666,174 @@ interface Ethernet4
 </details>
 
 
+## Переходим к проверке работы Undrelay и Overlay сети. 
+
+
+<details>
+
+<summary> Вывод команд для Spine-1: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary>Вывод команд для  Spine-2: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Leaf-1: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Leaf-2: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Leaf-3: </summary>
+
+```
+
+```
+</details>
+
+
+
+<details>
+
+<summary> Вывод команд для  Leaf-4: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Leaf-5: </summary>
+
+```
+
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  SW-1-1 : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  SW-1-3 : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  SW-1-5  : </summary>
+
+```
+
+```
+</details>
+
+
+
+
+<details>
+
+<summary> Вывод команд для  VMWare_vSphere: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Asterisk : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Macroscop-1 : </summary>
+
+```
+
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  Macroscop-2 : </summary>
+
+```
+
+```
+</details>
+
+
+
+<details>
+
+<summary> Вывод команд для  FileServer: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Вывод команд для  iSCSI-backup : </summary>
+
+```
+
+```
+</details>
+
 
 
 
