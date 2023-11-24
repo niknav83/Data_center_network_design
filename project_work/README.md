@@ -1390,7 +1390,17 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для VMWare_vSphere: </summary>
 
 ```
-
+[admin@VMWare_vSphere] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan10 vlan-id=10
+add interface=bond1 mtu=1400 name=vlan40 vlan-id=40
+/ip address
+add address=192.168.10.5/24 interface=vlan10 network=192.168.10.0
+add address=192.168.40.15/24 interface=vlan40 network=192.168.40.0
+/ip route
+add gateway=192.168.40.1
 ```
 </details>
 
@@ -1400,7 +1410,17 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для Asterisk : </summary>
 
 ```
-
+[admin@Asterisk] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan20 vlan-id=20
+add interface=bond1 mtu=1400 name=vlan40 vlan-id=40
+/ip address
+add address=192.168.20.5/24 interface=vlan20 network=192.168.20.0
+add address=192.168.40.25/24 interface=vlan40 network=192.168.40.0
+/ip route
+add gateway=192.168.40.1
 ```
 </details>
 
@@ -1411,6 +1431,17 @@ interface Ethernet7
 
 ```
 
+[admin@Macroscop-1] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan30 vlan-id=30
+add interface=bond1 mtu=1400 name=vlan40 vlan-id=40
+/ip address
+add address=192.168.30.5/24 interface=vlan30 network=192.168.30.0
+add address=192.168.40.35/24 interface=vlan40 network=192.168.40.0
+/ip route
+add gateway=192.168.40.1
 ```
 </details>
 
@@ -1420,7 +1451,17 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для Macroscop-2 : </summary>
 
 ```
-
+[admin@Macroscop-2] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan30 vlan-id=30
+add interface=bond1 mtu=1400 name=vlan40 vlan-id=40
+/ip address
+add address=192.168.30.6/24 interface=vlan30 network=192.168.30.0
+add address=192.168.40.45/24 interface=vlan40 network=192.168.40.0
+/ip route
+add gateway=192.168.40.1
 ```
 </details>
 
@@ -1430,6 +1471,7 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для Macroscop-3 : </summary>
 
 ```
+VPCS : 192.168.30.7 255.255.255.0 gateway 192.168.30.1
 
 ```
 </details>
@@ -1440,8 +1482,15 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для FileServer: </summary>
 
 ```
-
-
+[admin@FileServer] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan40 vlan-id=40
+/ip address
+add address=192.168.40.5/24 interface=vlan40 network=192.168.40.0
+/ip route
+add gateway=192.168.40.1
 ```
 </details>
 
@@ -1451,8 +1500,15 @@ interface Ethernet7
 <summary> Конфигурация интерфейсов для iSCSI-backup : </summary>
 
 ```
-
-
+[admin@iSCSI-backup] > export
+/interface bonding
+add mode=802.3ad name=bond1 slaves=ether1,ether2
+/interface vlan
+add interface=bond1 mtu=1400 name=vlan10 vlan-id=10
+/ip address
+add address=192.168.10.10/24 interface=vlan10 network=192.168.10.0
+/ip route
+add gateway=192.168.10.1
 ```
 </details>
 
