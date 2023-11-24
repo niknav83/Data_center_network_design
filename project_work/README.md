@@ -1513,5 +1513,159 @@ add gateway=192.168.10.1
 </details>
 
 
+### Настроим LAGs на коммутаторах SW-1-1, SW-1-3, SW-1-5.
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для SW-1-1 : </summary>
+
+```
+vlan 10,20,30,40
+!
+interface Port-Channel4
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   spanning-tree portfast
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 4 mode active
+!
+interface Ethernet2
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 4 mode active
+!
+interface Ethernet3
+   switchport access vlan 40
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+interface Ethernet5
+   switchport access vlan 30
+!
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для SW-1-3 : </summary>
+
+```
+vlan 10,20,30,40
+!
+interface Port-Channel7
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   spanning-tree portfast
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 7 mode active
+!
+interface Ethernet2
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 7 mode active
+!
+interface Ethernet3
+   switchport access vlan 40
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+interface Ethernet5
+   switchport access vlan 30
+!
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для SW-1-5  : </summary>
+
+```
+vlan 10,20,30,40
+!
+interface Port-Channel6
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 6 mode active
+!
+interface Ethernet2
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 6 mode active
+!
+interface Ethernet3
+   switchport access vlan 30
+!
+```
+</details>
+
+
+### Настроим интерфейсы на коммутаторах SW-2-1, SW-2-2.
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для SW-2-1 : </summary>
+
+```
+!
+vlan 10,20,30,40
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+!
+interface Ethernet2
+   switchport access vlan 30
+!
+interface Ethernet3
+   switchport access vlan 40
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для SW-2-2 : </summary>
+
+```
+vlan 10,20,30,40
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+!
+interface Ethernet2
+   switchport access vlan 40
+!
+interface Ethernet3
+   switchport access vlan 30
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+```
+</details>
+
+
+
 
 
