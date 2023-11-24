@@ -421,6 +421,7 @@ router ospf 1
 
 ### Настроим интерфейсы Loopback10, VLAN, VRF на всех устройствах Overlay-сети.
 
+<details>
 <summary> Конфигурация интерфейсов для Leaf-1: </summary>
 
 ```
