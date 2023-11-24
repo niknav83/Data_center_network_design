@@ -1028,6 +1028,433 @@ router bgp 65000
 ```
 </details>
 
+## Приступаем к настрйке ESI-LAGs:
+
+### Настроим ESI-LAGs на всех Leaf устройствах Overlay-сети.
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и ESI-LAGs для Leaf-1: </summary>
+
+```
+interface Port-Channel1
+   switchport trunk allowed vlan 10,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4110
+      route-target import 12:23:34:45:41:10
+   lacp system-id 1111.2222.4110
+   spanning-tree portfast
+!
+interface Port-Channel2
+   switchport trunk allowed vlan 20,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4220
+      route-target import 12:23:34:45:42:20
+   lacp system-id 1111.2222.4220
+   spanning-tree portfast
+!
+interface Port-Channel3
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4330
+      route-target import 12:23:34:45:43:30
+   lacp system-id 1111.2222.4330
+   spanning-tree portfast
+!
+interface Port-Channel4
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4224
+      route-target import 12:23:34:45:42:24
+   lacp system-id 1111.2222.4224
+   spanning-tree portfast
+!
+interface Ethernet3
+   switchport trunk allowed vlan 10,40
+   switchport mode trunk
+   channel-group 1 mode active
+   spanning-tree portfast
+!
+interface Ethernet4
+   switchport trunk allowed vlan 20,40
+   switchport mode trunk
+   channel-group 2 mode active
+   spanning-tree portfast
+!
+interface Ethernet5
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   channel-group 3 mode active
+   spanning-tree portfast
+!
+interface Ethernet8
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 4 mode active
+   spanning-tree portfast
+!
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и ESI-LAGs для Leaf-2: </summary>
+
+```
+interface Port-Channel1
+   switchport trunk allowed vlan 10,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4110
+      route-target import 12:23:34:45:41:10
+   lacp system-id 1111.2222.4110
+   spanning-tree portfast
+!
+interface Port-Channel2
+   switchport trunk allowed vlan 20,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4220
+      route-target import 12:23:34:45:42:20
+   lacp system-id 1111.2222.4220
+   spanning-tree portfast
+!
+interface Port-Channel3
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4330
+      route-target import 12:23:34:45:43:30
+   lacp system-id 1111.2222.4330
+   spanning-tree portfast
+!
+interface Port-Channel4
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4224
+      route-target import 12:23:34:45:42:24
+   lacp system-id 1111.2222.4224
+   spanning-tree portfast
+!
+interface Port-Channel6
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4226
+      route-target import 12:23:34:45:42:26
+   lacp system-id 1111.2222.4226
+   spanning-tree portfast
+!
+interface Ethernet3
+   switchport trunk allowed vlan 10,40
+   switchport mode trunk
+   channel-group 1 mode active
+   spanning-tree portfast
+!
+interface Ethernet4
+   switchport trunk allowed vlan 20,40
+   switchport mode trunk
+   channel-group 2 mode active
+   spanning-tree portfast
+!
+interface Ethernet5
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   channel-group 3 mode active
+   spanning-tree portfast
+!
+interface Ethernet6
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 6 mode active
+   spanning-tree portfast
+!
+interface Ethernet8
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 4 mode active
+   spanning-tree portfast
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и ESI-LAGs для Leaf-3: </summary>
+
+```
+interface Port-Channel6
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4226
+      route-target import 12:23:34:45:42:26
+   lacp system-id 1111.2222.4226
+   spanning-tree portfast
+!
+interface Port-Channel7
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4227
+      route-target import 12:23:34:45:42:27
+   lacp system-id 1111.2222.4227
+   spanning-tree portfast
+!
+interface Port-Channel8
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4228
+      route-target import 12:23:34:45:42:28
+   lacp system-id 1111.2222.4228
+   spanning-tree portfast
+!
+interface Port-Channel9
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4229
+      route-target import 12:23:34:45:42:29
+   lacp system-id 1111.2222.4229
+   spanning-tree portfast
+!
+interface Port-Channel10
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4210
+      route-target import 12:23:34:45:42:10
+   lacp system-id 1111.2222.4210
+   spanning-tree portfast
+!
+interface Ethernet3
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   channel-group 8 mode active
+   spanning-tree portfast
+!
+interface Ethernet4
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   channel-group 9 mode active
+   spanning-tree portfast
+!
+interface Ethernet5
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   channel-group 10 mode active
+   spanning-tree portfast
+!
+interface Ethernet6
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 6 mode active
+   spanning-tree portfast
+!
+interface Ethernet7
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 7 mode active
+   spanning-tree portfast
+!
+```
+</details>
+
+
+
+<details>
+
+<summary> Конфигурация интерфейсов и ESI-LAGs для Leaf-4: </summary>
+
+```
+!
+interface Port-Channel7
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4227
+      route-target import 12:23:34:45:42:27
+   lacp system-id 1111.2222.4227
+   spanning-tree portfast
+!
+interface Port-Channel8
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4228
+      route-target import 12:23:34:45:42:28
+   lacp system-id 1111.2222.4228
+   spanning-tree portfast
+!
+interface Port-Channel9
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4229
+      route-target import 12:23:34:45:42:29
+   lacp system-id 1111.2222.4229
+   spanning-tree portfast
+!
+interface Port-Channel10
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   !
+   evpn ethernet-segment
+      identifier 0000:1111:2222:3333:4210
+      route-target import 12:23:34:45:42:10
+   lacp system-id 1111.2222.4210
+   spanning-tree portfast
+!
+interface Ethernet3
+   switchport trunk allowed vlan 30,40
+   switchport mode trunk
+   channel-group 8 mode active
+   spanning-tree portfast
+!
+interface Ethernet4
+   switchport trunk allowed vlan 40
+   switchport mode trunk
+   channel-group 9 mode active
+   spanning-tree portfast
+!
+interface Ethernet5
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   channel-group 10 mode active
+   spanning-tree portfast
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+   channel-group 7 mode active
+   spanning-tree portfast
+```
+</details>
+
+
+## Переходим к настройке серверов. 
+
+Для демонстрации насстройки серверов будем использовать образ Mikrotik Router OS версии 7.11.2.
+
+
+### Адреса серверов и их интерфейсы. 
+
+| Device          | Interface | IP Address    | Subnet Mask   | Default Gateway |
+|-----------------|-----------|---------------|---------------|-----------------|
+| VMWare_vSphere  | Vlan 10   | 192.168.10.5  | 255.255.255.0 | 192.168.10.1    |
+|                 | Vlan 40   | 192.168.40.15 | 255.255.255.0 | 192.168.40.1    |
+| Asterisk        | Vlan 20   | 192.168.20.5  | 255.255.255.0 | 192.168.20.1    |
+|                 | Vlan 40   | 192.168.40.25 | 255.255.255.0 | 192.168.40.1    |
+| Macroscop-1     | Vlan 30   | 192.168.30.5  | 255.255.255.0 | 192.168.30.1    |
+|                 | Vlan 40   | 192.168.40.35 | 255.255.255.0 | 192.168.40.1    |
+| Macroscop-2     | Vlan 30   | 192.168.30.6  | 255.255.255.0 | 192.168.30.1    |
+|                 | Vlan 40   | 192.168.40.45 | 255.255.255.0 | 192.168.40.1    |
+| FileServer      | Vlan 40   | 192.168.40.5  | 255.255.255.0 | 192.168.40.1    |
+| iSCSI-backup    | Vlan 10   | 192.168.10.10 | 255.255.255.0 | 192.168.10.1    |
+| Macroscop-3     | Vlan 30   | 192.168.30.7  | 255.255.255.0 | 192.168.30.1    |
+
+
+### Настроим LAGs на всех серверах.
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для VMWare_vSphere: </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Asterisk : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Macroscop-1 : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Macroscop-2 : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для Macroscop-3 : </summary>
+
+```
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для FileServer: </summary>
+
+```
+
+
+```
+</details>
+
+
+<details>
+
+<summary> Конфигурация интерфейсов для iSCSI-backup : </summary>
+
+```
+
+
+```
+</details>
 
 
 
