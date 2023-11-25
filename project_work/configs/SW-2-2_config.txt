@@ -1,0 +1,65 @@
+! device: SW-2-2 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname SW-2-2
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+vlan 10,20,30,40
+!
+interface Ethernet1
+   switchport trunk allowed vlan 10,20,30,40
+   switchport mode trunk
+!
+interface Ethernet2
+   switchport access vlan 40
+!
+interface Ethernet3
+   switchport access vlan 30
+!
+interface Ethernet4
+   switchport access vlan 20
+!
+interface Ethernet5
+   shutdown
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Ethernet9
+   shutdown
+!
+interface Ethernet10
+   shutdown
+!
+interface Ethernet11
+   shutdown
+!
+interface Ethernet12
+   shutdown
+!
+interface Ethernet13
+   shutdown
+!
+interface Ethernet14
+   shutdown
+!
+interface Ethernet15
+   shutdown
+!
+interface Management1
+!
+no ip routing
+!
+end

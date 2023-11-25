@@ -1,0 +1,120 @@
+! device: Spine-2 (vEOS, EOS-4.21.1.1F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Spine-2
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+interface Ethernet1
+   no switchport
+   ip address 10.0.2.1/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet2
+   no switchport
+   ip address 10.0.2.5/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet3
+   no switchport
+   ip address 10.0.2.9/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet4
+   no switchport
+   ip address 10.0.2.13/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet5
+   no switchport
+   ip address 10.0.2.17/30
+   ip ospf bfd
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+!
+interface Ethernet6
+   shutdown
+!
+interface Ethernet7
+   shutdown
+!
+interface Ethernet8
+   shutdown
+!
+interface Ethernet9
+   shutdown
+!
+interface Ethernet10
+   shutdown
+!
+interface Ethernet11
+   shutdown
+!
+interface Ethernet12
+   shutdown
+!
+interface Ethernet13
+   shutdown
+!
+interface Ethernet14
+   shutdown
+!
+interface Ethernet15
+   shutdown
+!
+interface Loopback0
+   ip address 10.255.0.2/32
+   ip ospf area 0.0.0.0
+!
+interface Management1
+!
+ip routing
+!
+router bgp 65000
+   router-id 10.255.0.2
+   maximum-paths 4
+   neighbor LEAVES peer-group
+   neighbor LEAVES remote-as 65000
+   neighbor LEAVES update-source Loopback0
+   neighbor LEAVES route-reflector-client
+   neighbor LEAVES send-community
+   neighbor LEAVES maximum-routes 12000 
+   neighbor 10.255.1.1 peer-group LEAVES
+   neighbor 10.255.1.2 peer-group LEAVES
+   neighbor 10.255.2.1 peer-group LEAVES
+   neighbor 10.255.2.2 peer-group LEAVES
+   neighbor 10.255.3.1 peer-group LEAVES
+   !
+   address-family evpn
+      neighbor LEAVES activate
+   !
+   address-family ipv4
+      no neighbor LEAVES activate
+!
+router ospf 1
+   router-id 10.255.0.2
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   no passive-interface Ethernet3
+   no passive-interface Ethernet4
+   no passive-interface Ethernet5
+   network 0.0.0.0/0 area 0.0.0.0
+   max-lsa 12000
+!
+end
