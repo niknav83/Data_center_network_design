@@ -21,7 +21,7 @@
     - [Адреса серверов и их интерфейсы](#Адреса-серверов-и-их-интерфейсы)
     - [Настроим LAGs на всех серверах](#Настроим-LAGs-на-всех-серверах)
 14. [Переходим к проверке работы Undrelay и Overlay сети](#Переходим-к-проверке-работы-Undrelay-и-Overlay-сети)
-15. [Файлы конфигураций устройств и сама работа выполненная в EVE-NG](#Файлы-конфигураций-устройств-и-сама-работа-выполненная-в-EVE-NG](https://github.com/niknav83/Data_center_network_design/tree/main/project_work/configs))
+15. [Файлы конфигураций устройств и сама работа выполненная в EVE-NG](https://github.com/niknav83/Data_center_network_design/tree/main/project_work/configs)
 
 
 
