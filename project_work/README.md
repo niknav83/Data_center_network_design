@@ -213,7 +213,6 @@ router ospf 1
 ```
 </details>
 
-
 <details>
 
 <summary>Конфигурация интерфейсов и OSPF для Spine-2: </summary>
